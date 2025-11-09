@@ -26,13 +26,12 @@ public class BadgeWidget extends SimpleWidget {
     super.initialize(parent);
 
     IconWidget iconWidget = new IconWidget(this.icon);
-    iconWidget.addId("badgeIcon");
+    iconWidget.addId("badge-icon");
     this.addChild(iconWidget);
 
     ComponentWidget title = ComponentWidget.text(this.readableTitle(this.title));
-    title.addId("badgeTitle");
+    title.addId("badge-title");
 
-    this.hoverBoxDelay().set(1000);
     this.setHoverComponent(Component.text(this.description));
     this.addChild(title);
   }

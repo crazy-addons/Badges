@@ -26,7 +26,7 @@ public class BadgeActivity extends Activity {
       this.badgeWidgets.add(new BadgeWidget(badge.getIcon(), badge.getName(), badge.getDescription()));
 
     this.gridWidget = new TilesGridWidget<>();
-    this.gridWidget.addId("gridWidget");
+    this.gridWidget.addId("grid-widget");
   }
 
   @Override

@@ -28,7 +28,6 @@ public class Badge {
   private final String playersUrl;
   private final ArrayList<UUID> players = new ArrayList<>();
 
-
   public Badge(int id, UUID uuid, String name, String description) {
     this.id = id;
     this.uuid = uuid;

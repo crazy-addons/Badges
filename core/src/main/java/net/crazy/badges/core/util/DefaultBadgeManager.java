@@ -36,6 +36,9 @@ public class DefaultBadgeManager implements BadgeManager {
     List<Badge> playerBadges = new ArrayList<>();
 
     for(Badge badge : this.badges) {
+      if (badge.getId() == Badge.STAFF_BADGE || badge.getId() == Badge.TRANSLATOR_BADGE) {
+        continue;
+      }
       if (badge.players().contains(uuid))
         playerBadges.add(badge);
     }
@@ -91,10 +94,6 @@ public class DefaultBadgeManager implements BadgeManager {
         JsonObject object = entries.get(i).getAsJsonObject();
 
         int id = object.get("id").getAsInt();
-        if (id == Badge.STAFF_BADGE || id == Badge.TRANSLATOR_BADGE) {
-          continue;
-        }
-
         UUID uuid = UUID.fromString(object.get("uuid").getAsString());
         String name = object.get("name").getAsString();
         String description = object.get("description").getAsString();
