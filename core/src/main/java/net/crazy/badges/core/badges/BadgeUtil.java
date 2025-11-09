@@ -7,17 +7,17 @@ import com.google.gson.JsonObject;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import net.crazy.badges.core.Badges;
+import net.crazy.badges.core.BadgesAddon;
 import net.labymod.api.util.io.web.request.Request;
 import net.labymod.api.util.io.web.request.Response;
 
 public class BadgeUtil {
 
   private static final String BADGES_ENDPOINT = "https://laby.net/api/v3/badges";
-  private final Badges addon;
+  private final BadgesAddon addon;
   private final Request<JsonElement> request;
 
-  public BadgeUtil(Badges addon) {
+  public BadgeUtil(BadgesAddon addon) {
     this.addon = addon;
 
     this.request = Request.ofGson(JsonElement.class)

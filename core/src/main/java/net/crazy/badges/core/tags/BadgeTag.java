@@ -1,9 +1,8 @@
 package net.crazy.badges.core.tags;
 
 import java.util.LinkedList;
-import java.util.UUID;
 
-import net.crazy.badges.core.Badges;
+import net.crazy.badges.core.BadgesAddon;
 import net.crazy.badges.core.badges.Badge;
 import net.labymod.api.client.entity.Entity;
 import net.labymod.api.client.entity.player.ClientPlayer;
@@ -14,14 +13,14 @@ import net.labymod.api.client.render.matrix.Stack;
 
 public class BadgeTag extends IconTag {
 
-  private final Badges addon;
+  private final BadgesAddon addon;
 
-  private BadgeTag(Badges addon, int size) {
+  private BadgeTag(BadgesAddon addon, int size) {
     super(size);
     this.addon = addon;
   }
 
-  public static BadgeTag create(Badges addon, int size) {
+  public static BadgeTag create(BadgesAddon addon, int size) {
     return new BadgeTag(addon, size);
   }
 

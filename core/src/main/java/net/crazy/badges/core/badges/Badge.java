@@ -2,7 +2,7 @@ package net.crazy.badges.core.badges;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import net.crazy.badges.core.Badges;
+import net.crazy.badges.core.BadgesAddon;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.util.io.web.request.Request;
 import net.labymod.api.util.io.web.request.Response;
@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public class Badge {
 
-  private final Badges addon;
+  private final BadgesAddon addon;
 
   private final int id;
   private final UUID uuid;
@@ -23,7 +23,7 @@ public class Badge {
   private final String playersUrl;
   private final String iconUrl;
 
-  public Badge(Badges addon, int id, UUID uuid, String name, String description) {
+  public Badge(BadgesAddon addon, int id, UUID uuid, String name, String description) {
     this.addon = addon;
     this.id = id;
     this.uuid = uuid;

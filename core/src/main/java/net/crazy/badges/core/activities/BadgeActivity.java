@@ -1,8 +1,7 @@
 package net.crazy.badges.core.activities;
 
-import net.crazy.badges.core.Badges;
+import net.crazy.badges.core.BadgesAddon;
 import net.crazy.badges.core.badges.Badge;
-import net.labymod.api.client.gui.screen.LabyScreen;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.activity.Activity;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
@@ -21,7 +20,7 @@ public class BadgeActivity extends Activity {
   private final ListSession<?> listSession = new ListSession<>();
 
   public BadgeActivity() {
-    Badges addon = Badges.addon;
+    BadgesAddon addon = BadgesAddon.addon;
 
     for (Badge badge : addon.badges.values())
       badgeWidgets.add(new BadgeWidget(badge.icon(), badge.getName(), badge.getDescription()));

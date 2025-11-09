@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.UUID;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import net.crazy.badges.core.badges.Badge;
 import net.crazy.badges.core.badges.BadgeUtil;
 import net.crazy.badges.core.events.CacheEvents;
@@ -19,8 +17,8 @@ import net.labymod.api.notification.Notification;
 import net.labymod.api.notification.Notification.Type;
 
 @AddonMain
-public class Badges extends LabyAddon<AddonConfiguration> {
-  public static Badges addon;
+public class BadgesAddon extends LabyAddon<AddonConfiguration> {
+  public static BadgesAddon addon;
 
   public LinkedHashMap<UUID, Badge> badges = new LinkedHashMap<>();
   public final HashMap<UUID, LinkedList<Badge>> playerCache = new HashMap<>();

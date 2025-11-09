@@ -2,7 +2,7 @@ package net.crazy.badges.core.events;
 
 import java.util.LinkedList;
 import java.util.UUID;
-import net.crazy.badges.core.Badges;
+import net.crazy.badges.core.BadgesAddon;
 import net.crazy.badges.core.badges.Badge;
 import net.labymod.api.client.entity.player.Player;
 import net.labymod.api.event.Subscribe;
@@ -10,9 +10,9 @@ import net.labymod.api.event.client.render.model.entity.player.PlayerModelRender
 
 public class PlayerRenderEvent {
 
-  private final Badges addon;
+  private final BadgesAddon addon;
 
-  public PlayerRenderEvent(Badges addon) {
+  public PlayerRenderEvent(BadgesAddon addon) {
     this.addon = addon;
   }
 
