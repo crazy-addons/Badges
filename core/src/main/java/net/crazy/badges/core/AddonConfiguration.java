@@ -10,7 +10,6 @@ import net.labymod.api.configuration.loader.annotation.ConfigName;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 import net.labymod.api.util.MethodOrder;
 
-@SuppressWarnings("FieldMayBeFinal")
 @ConfigName("settings")
 public class AddonConfiguration extends AddonConfig {
 
@@ -37,19 +36,15 @@ public class AddonConfiguration extends AddonConfig {
     return this.enabled;
   }
 
-  public int size() {
-    return this.size.get();
+  public ConfigProperty<Boolean> showOwn() {
+    return this.showOwn;
   }
 
-  public boolean compact() {
-    return this.compactBadges.get();
-  }
-
-  public boolean showOwn() {
-    return this.showOwn.get();
-  }
-
-  public ConfigProperty<Boolean> getCompactBadges() {
+  public ConfigProperty<Boolean> compactBadges() {
     return this.compactBadges;
+  }
+
+  public ConfigProperty<Integer> size() {
+    return this.size;
   }
 }

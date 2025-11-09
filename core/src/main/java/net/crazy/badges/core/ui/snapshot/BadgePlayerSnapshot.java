@@ -24,9 +24,9 @@ public class BadgePlayerSnapshot extends AbstractLabySnapshot {
     this.uuid = player.getUniqueId();
     this.badges = BadgesAddon.badgeManager().getPlayerBadges(player);
     this.enabled = addon.configuration().enabled().get();
-    this.scale = addon.configuration().size();
-    this.compactBadges = addon.configuration().compact();
-    this.showOnBadges = addon.configuration().showOwn();
+    this.scale = addon.configuration().size().get();
+    this.compactBadges = addon.configuration().compactBadges().get();
+    this.showOnBadges = addon.configuration().showOwn().get();
   }
 
   public boolean isEnabled() {

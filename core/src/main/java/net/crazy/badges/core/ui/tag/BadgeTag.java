@@ -85,6 +85,6 @@ public class BadgeTag extends AbstractTagRenderer {
 
   @Override
   public float getScale() {
-    return 2 + (this.config.size() - 1) * 5F / 9;
+    return 2 + (this.config.size().get() - 1) * 5F / 9;
   }
 }
