@@ -1,4 +1,4 @@
-package net.crazy.badges.core.activities;
+package net.crazy.badges.core.ui.widget;
 
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.icon.Icon;
@@ -10,9 +10,10 @@ import net.labymod.api.client.gui.screen.widget.widgets.renderer.IconWidget;
 
 @AutoWidget
 public class BadgeWidget extends SimpleWidget {
-  private Icon icon;
-  private String title;
-  private String description;
+
+  private final Icon icon;
+  private final String title;
+  private final String description;
 
   public BadgeWidget(Icon icon, String title, String description) {
     this.icon = icon;
@@ -24,16 +25,16 @@ public class BadgeWidget extends SimpleWidget {
   public void initialize(Parent parent) {
     super.initialize(parent);
 
-    IconWidget iconWidget = new IconWidget(icon);
+    IconWidget iconWidget = new IconWidget(this.icon);
     iconWidget.addId("badgeIcon");
-    addChild(iconWidget);
+    this.addChild(iconWidget);
 
-    ComponentWidget title = ComponentWidget.text(readableTitle(this.title));
+    ComponentWidget title = ComponentWidget.text(this.readableTitle(this.title));
     title.addId("badgeTitle");
 
-    hoverBoxDelay().set(1000);
-    setHoverComponent(Component.text(this.description));
-    addChild(title);
+    this.hoverBoxDelay().set(1000);
+    this.setHoverComponent(Component.text(this.description));
+    this.addChild(title);
   }
 
   private int getSpaceAmount(String string) {
@@ -52,12 +53,12 @@ public class BadgeWidget extends SimpleWidget {
     if (title.length() <= 10)
       return title;
 
-    int spaceAmount = getSpaceAmount(title);
+    int spaceAmount = this.getSpaceAmount(title);
 
     if (spaceAmount >= 2)
-      return addLine(title, getSpacePosition(title, 2));
+      return this.addLine(title, this.getSpacePosition(title, 2));
 
-    return addLine(title, getSpacePosition(title, 1));
+    return this.addLine(title, this.getSpacePosition(title, 1));
   }
 
   private int getSpacePosition(String title, int pos) {

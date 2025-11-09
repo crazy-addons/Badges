@@ -1,59 +1,32 @@
 package net.crazy.badges.core;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.UUID;
-import net.crazy.badges.core.badges.Badge;
-import net.crazy.badges.core.badges.BadgeUtil;
-import net.crazy.badges.core.events.CacheEvents;
-import net.crazy.badges.core.events.PlayerRenderEvent;
-import net.crazy.badges.core.tags.BadgeTag;
+import net.crazy.badges.api.BadgeManager;
+import net.crazy.badges.api.generated.ReferenceStorage;
+import net.crazy.badges.core.listener.PlayerListener;
+import net.crazy.badges.core.ui.tag.BadgeTag;
 import net.labymod.api.addon.LabyAddon;
-import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.player.tag.PositionType;
 import net.labymod.api.models.addon.annotation.AddonMain;
-import net.labymod.api.notification.Notification;
-import net.labymod.api.notification.Notification.Type;
 
 @AddonMain
 public class BadgesAddon extends LabyAddon<AddonConfiguration> {
-  public static BadgesAddon addon;
 
-  public LinkedHashMap<UUID, Badge> badges = new LinkedHashMap<>();
-  public final HashMap<UUID, LinkedList<Badge>> playerCache = new HashMap<>();
-  public BadgeUtil badgeUtil;
+  private static BadgesAddon instance;
 
   @Override
   protected void enable() {
+    instance = this;
+
+    badgeManager().cacheBadges();
+
     this.registerSettingCategory();
-    addon = this;
-
-    badgeUtil = new BadgeUtil(this);
-    badgeUtil.updateBadges();
-
-    this.registerListener(new PlayerRenderEvent(this));
-    this.registerListener(new CacheEvents(this));
-
-    labyAPI().tagRegistry().registerAfter("friendtags_tag", "badge", PositionType.ABOVE_NAME, BadgeTag.create(
-        this,
-        configuration().size()
-    ));
-
-    addon.configuration().getCompactBadges().addChangeListener((state) -> {
-      if (state) {
-        // Don't purge "cache" when enabling compact mode as this doesn't cause any issues
-        return;
-      }
-
-      /**
-       * Purge "Cache"
-       * Meaning: Clear the playerCache as due to the #removeIf inside BadgeTag the badges list get's updated
-       * This should not really be a performance bottleneck as it's just resets everything back to the beginning
-       * and when a player is rendered, their correct badges are loaded from the normal badges cache
-       */
-      playerCache.clear();
-    });
+    this.registerListener(new PlayerListener());
+    this.labyAPI().tagRegistry().registerAfter(
+        "friendtags_tag",
+        "badge",
+        PositionType.ABOVE_NAME,
+        new BadgeTag(this)
+    );
 
     this.logger().info("[Badges] Addon enabled.");
   }
@@ -63,11 +36,7 @@ public class BadgesAddon extends LabyAddon<AddonConfiguration> {
     return AddonConfiguration.class;
   }
 
-  public void pushNotification(String title, String text) {
-    Notification.Builder builder = Notification.builder()
-        .title(Component.text(title))
-        .text(Component.text(text))
-        .type(Type.SYSTEM);
-    labyAPI().notificationController().push(builder.build());
+  public static BadgeManager badgeManager() {
+    return ((ReferenceStorage) instance.referenceStorageAccessor()).badgeManager();
   }
 }

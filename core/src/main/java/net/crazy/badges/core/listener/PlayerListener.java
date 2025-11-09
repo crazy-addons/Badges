@@ -1,24 +1,19 @@
-package net.crazy.badges.core.events;
+package net.crazy.badges.core.listener;
 
 import net.crazy.badges.core.BadgesAddon;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.network.playerinfo.PlayerInfoRemoveEvent;
 import net.labymod.api.event.client.network.server.ServerDisconnectEvent;
 
-public class CacheEvents {
-  private final BadgesAddon addon;
-
-  public CacheEvents(BadgesAddon addon) {
-    this.addon = addon;
-  }
+public class PlayerListener {
 
   @Subscribe
   public void onPlayerDisconnect(PlayerInfoRemoveEvent event) {
-    addon.playerCache.remove(event.playerInfo().profile().getUniqueId());
+    BadgesAddon.badgeManager().removeFromPlayerCache(event.playerInfo().profile().getUniqueId());
   }
 
   @Subscribe
   public void onClientDisconnect(ServerDisconnectEvent event) {
-    addon.playerCache.clear();
+    BadgesAddon.badgeManager().clearPlayerCache();
   }
 }
