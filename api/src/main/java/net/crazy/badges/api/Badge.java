@@ -1,8 +1,7 @@
-package net.crazy.badges.core.badges;
+package net.crazy.badges.api;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import net.crazy.badges.core.Badges;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.util.io.web.request.Request;
 import net.labymod.api.util.io.web.request.Response;
@@ -11,49 +10,43 @@ import java.util.UUID;
 
 public class Badge {
 
-  private final Badges addon;
+  public static final int STAFF_BADGE = 1;
+  public static final int TRANSLATOR_BADGE = 3;
+  public static final int ONE_YEAR_STREAK = 9;
+  public static final int TWO_YEAR_STREAK = 10;
+  public static final int THREE_YEAR_STREAK = 11;
+  public static final int HIGHEST_YEAR_STREAK = 13;
 
   private final int id;
   private final UUID uuid;
   private final String name;
   private final String description;
 
-  private final ArrayList<UUID> players = new ArrayList<>();
+  private final String iconUrl;
+  private final Icon icon;
 
   private final String playersUrl;
-  private final String iconUrl;
+  private final ArrayList<UUID> players = new ArrayList<>();
 
-  public Badge(Badges addon, int id, UUID uuid, String name, String description) {
-    this.addon = addon;
+  public Badge(int id, UUID uuid, String name, String description) {
     this.id = id;
     this.uuid = uuid;
     this.name = name;
     this.description = description;
-
-    this.playersUrl = String.format("https://laby.net/api/badge/%s", this.id);
     this.iconUrl = String.format(
         "https://laby.net/texture/badge-small/%s.png",
         this.uuid.toString()
     );
+    this.icon = Icon.url(this.iconUrl).resolution(50, 50);
+
+    this.playersUrl = String.format("https://laby.net/api/badge/%s", this.id);
 
     this.updatePlayers();
 
   }
 
-  public void updatePlayers() {
-    this.players.clear();
-    Request.ofGson(JsonElement.class)
-        .url(this.playersUrl)
-        .async(true)
-        .execute(this::handleResponse);
-  }
-
-  public ArrayList<UUID> players() {
-    return this.players;
-  }
-
-  public Icon icon() {
-    return Icon.url(this.iconUrl).resolution(50, 50);
+  public UUID getUniqueId() {
+    return this.uuid;
   }
 
   public int getId() {
@@ -68,19 +61,39 @@ public class Badge {
     return this.description;
   }
 
+  public String getIconUrl() {
+    return this.iconUrl;
+  }
+
+  public Icon getIcon() {
+    return this.icon;
+  }
+
+  public ArrayList<UUID> players() {
+    return this.players;
+  }
+
+  public void updatePlayers() {
+    this.players.clear();
+    Request.ofGson(JsonElement.class)
+        .url(this.playersUrl)
+        .async(true)
+        .execute(this::handleResponse);
+  }
+
   private void handleResponse(Response<JsonElement> response) {
     try {
       if (response.hasException()) {
-        throw response.exception();
+        throw new IllegalStateException(response.exception());
       }
 
       if (response.isEmpty()) {
-        throw new IllegalStateException("Invalid badge response");
+        throw new IllegalStateException("Response is empty");
       }
 
       JsonElement element = response.get();
       if (!element.isJsonArray()) {
-        throw new IllegalStateException("Invalid badge response");
+        throw new IllegalStateException("Response is not an array");
       }
 
       JsonArray entries = element.getAsJsonArray();
@@ -88,13 +101,8 @@ public class Badge {
         UUID player = UUID.fromString(entries.get(index).getAsString());
         this.players.add(player);
       }
-
     } catch (Exception exception) {
-      this.addon.pushNotification(
-          "Badges - Error",
-          "There was an error while fetching the Players of Badge: " + Badge.this.id
-      );
-      this.addon.logger().error(exception.getMessage());
+      exception.printStackTrace();
     }
   }
 }

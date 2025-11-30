@@ -1,18 +1,15 @@
 package net.crazy.badges.core;
 
-import net.crazy.badges.core.activities.BadgeActivity;
+import net.crazy.badges.core.ui.activity.BadgeActivity;
 import net.labymod.api.addon.AddonConfig;
 import net.labymod.api.client.gui.screen.activity.Activity;
 import net.labymod.api.client.gui.screen.widget.widgets.activity.settings.ActivitySettingWidget.ActivitySetting;
-import net.labymod.api.client.gui.screen.widget.widgets.activity.settings.AddonActivityWidget.AddonActivitySetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SliderWidget.SliderSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.configuration.loader.annotation.ConfigName;
-import net.labymod.api.configuration.loader.annotation.Exclude;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 import net.labymod.api.util.MethodOrder;
 
-@SuppressWarnings("FieldMayBeFinal")
 @ConfigName("settings")
 public class AddonConfiguration extends AddonConfig {
 
@@ -25,8 +22,8 @@ public class AddonConfiguration extends AddonConfig {
   @SwitchSetting
   private final ConfigProperty<Boolean> compactBadges = new ConfigProperty<>(false);
 
-  @SliderSetting(min = 5, max = 20)
-  private final ConfigProperty<Integer> size = new ConfigProperty<>(10);
+  @SliderSetting(min = 1, max = 10)
+  private final ConfigProperty<Integer> size = new ConfigProperty<>(5);
 
   @ActivitySetting
   @MethodOrder(after = "size")
@@ -39,19 +36,15 @@ public class AddonConfiguration extends AddonConfig {
     return this.enabled;
   }
 
-  public int size() {
-    return this.size.get();
+  public ConfigProperty<Boolean> showOwn() {
+    return this.showOwn;
   }
 
-  public boolean compact() {
-    return this.compactBadges.get();
-  }
-
-  public boolean showOwn() {
-    return this.showOwn.get();
-  }
-
-  public ConfigProperty<Boolean> getCompactBadges() {
+  public ConfigProperty<Boolean> compactBadges() {
     return this.compactBadges;
+  }
+
+  public ConfigProperty<Integer> size() {
+    return this.size;
   }
 }

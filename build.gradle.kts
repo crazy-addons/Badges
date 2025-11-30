@@ -1,3 +1,5 @@
+import net.labymod.labygradle.common.extension.model.labymod.ReleaseChannels
+
 plugins {
     id("net.labymod.labygradle")
     id("net.labymod.labygradle.addon")
@@ -8,30 +10,28 @@ val versions = providers.gradleProperty("net.labymod.minecraft-versions").get().
 group = "net.crazy"
 version = "1.5.0"
 
-java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
-
 labyMod {
-    defaultPackageName = "net.crazy.badges" //change this to your main package name (used by all modules)
+    defaultPackageName = "net.crazy.badges"
+
+    addonInfo {
+        namespace = "badges"
+        displayName = "Badges"
+        author = "Crazy"
+        description = "Displays players' laby.net badges above their nametag"
+        minecraftVersion = "*"
+        version = rootProject.version.toString()
+
+        releaseChannel.set(ReleaseChannels.SNAPSHOT)
+    }
 
     minecraft {
         registerVersion(versions.toTypedArray()) {
             runs {
                 getByName("client") {
-                    // When the property is set to true, you can log in with a Minecraft account
-                    // devLogin = true
+                    devLogin = true
                 }
             }
         }
-    }
-
-    addonInfo {
-        namespace = "badges"
-        displayName = "Badges"
-        author = "CrazySchnetzler"
-        description = "Shows Badges of players from Laby.net above their NameTag."
-        minecraftVersion = "*"
-        iconUrl = "https://cs-jako.github.io/images/addons/Badges.png"
-        version = "1.5.0"
     }
 }
 

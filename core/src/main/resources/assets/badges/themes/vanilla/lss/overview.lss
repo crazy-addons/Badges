@@ -2,7 +2,7 @@ Scroll {
    width: 100%;
    height: 100%;
 
-   .gridWidget {
+   .grid-widget {
       top: 0;
       left: 0;
       height: fit-content;
@@ -19,14 +19,16 @@ Scroll {
 }
 
 Badge {
-   .badgeIcon {
+   hover-box-delay: 1000;
+
+   .badge-icon {
       alignment-x: center;
       top: 30%;
       height: 32;
       width: 32;
    }
 
-   .badgeTitle {
+   .badge-title {
       alignment-x: center;
       top: 75%;
    }
